@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login | Tektino Inovasi Indonesia</title>
+
+        <link rel="stylesheet" href="/css/adminlte.css" />
+        <link rel="stylesheet" href="/css/login.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    </head>
+
+    <body class="login-page">
+        <div class="background"></div>
+        <div class="login-box shadow-lg">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <a href="/" class="link-dark d-flex justify-content-center link-offset-2 link-opacity-100 link-opacity-50-hover">
+                        <img src="/img/logo.png" alt="" class="" style="width: 250px" />
+                    </a>
+                </div>
+                <div class="card-body login-card-body rounded">
+                    <p class="login-box-msg">Sign in to start your session</p>
+                    <div th:if="${param.logout}" class="alert alert-success" role="alert">Anda telah berhasil logout.</div>
+
+                    <form th:action="@{/login}" method="post">
+                        <div class="input-group mb-1">
+                            <div class="form-floating">
+                                <input id="username" type="text" name="username" class="form-control opct" value="" placeholder="" />
+                                <label for="username">Username</label>
+                            </div>
+                            <div class="input-group-text opct">
+                                <span class="material-symbols-outlined">account_circle</span>
+                            </div>
+                        </div>
+                        <div class="input-group mb-1">
+                            <div class="form-floating">
+                                <input id="loginPassword" type="password" name="password" class="form-control opct" placeholder="" />
+                                <label for="loginPassword">Password</label>
+                            </div>
+                            <div class="input-group-text opct">
+                                <span class="material-symbols-outlined">lock</span>
+                            </div>
+                        </div>
+                        <p class="mb-1 mt-3"><a href="#">I forgot my password</a></p>
+                        <div class="row mt-4">
+                            <div class="col-8 d-inline-flex align-items-center">
+                                <div class="d-grid gap-2">
+                                    <a href="/" class="btn btn-primary">Go Back</a>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary">Login</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="/js/adminlte.js"></script>
+    </body>
+</html>

@@ -1,0 +1,13 @@
+Body{
+    background:url('/img/banner-2.png');
+    background-size: cover;
+}
+.login-box{
+    opacity: 80%;
+}
+
+.opct{
+    background-color: lightgray !important;
+    color: black;
+    opacity: 60%;
+}
