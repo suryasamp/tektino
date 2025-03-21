@@ -1,39 +1,25 @@
 package tektino.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
+@Data
 @Table(name = "roles")
 public class RoleModel {
 
     @Id
     private Integer id;
 
-    @Column(name = "role_name")
+    // @Column(name = "role_name")
     private String roleName;
 
-    
-
-    public Integer getId() {
-        return this.id;
+    @Override
+    public String toString() {
+        return roleName; // Menampilkan nama peran
     }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getRoleName() {
-        return this.roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
 
 }
-
-

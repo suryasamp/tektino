@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <body>
-        <footer class="app-footer" th:fragment="footer">
-            <strong>
-                <p>&copy;Copyright <span id="currentYear"></span> PT. Tektino Inovasi Indonesia.</p>
-            </strong>
+        <footer class="app-footer">
+            <strong> Copyright &copy; <span id="currentYear"></span>&nbsp;PT Tektino Invasi Indonesia</strong>
         </footer>
 
-        <script th:fragment="script">
-            console.log("JavaScript footer dijalankan");
+        <script th:fragment="head">
             document.getElementById("currentYear").textContent = new Date().getFullYear();
         </script>
     </body>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head :: head"> </head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <!-- =============================== Navbar ================================ -->
+            <div th:replace="fragments/header :: header"></div>
+
+            <!-- ============================ START SIDEBAR ============================ -->
+            <div th:replace="fragments/sidebar  :: sidebar"></div>
+
+            <!-- =============================== CONTENT =============================== -->
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6"><h3 class="mb-0">Users Form</h3></div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-end">
+                                    <li class="breadcrumb-item"><a href="/user">User</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Users Forms</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <form id="userForm" class="needs-validation" novalidate th:action="@{/user/simpan}" th:object="${user}" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <!-- Form User -->
+                                <div class="col-md-8">
+                                    <div class="card card-primary card-outline mb-4">
+                                        <div class="card-header">
+                                            <div class="card-title">User Form</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-2">
+                                                        <label for="username" class="form-label">Username : <span class="text-danger">*</span></label>
+                                                        <input type="text" id="username" name="username" class="form-control" placeholder="Username" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-2">
+                                                        <label for="password" class="form-label">Password : <span class="text-danger">*</span></label>
+                                                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" />
+                                                        <div class="invalid-feedback">Password wajib diisi dan minimal 6 character.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-2">
+                                                        <label for="name" class="form-label">Nama Lengkap : <span class="text-danger">*</span></label>
+                                                        <input type="text" id="name" name="name" class="form-control" placeholder="Nama Lengkap" />
+                                                        <div class="invalid-feedback">Nama lengkap wajib diisi.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-2 jk">
+                                                        <label for="jenis_kelamin" class="form-label">Jenis Kelamin : <span class="text-danger">*</span></label>
+                                                        <br />
+                                                        <input class="form-check-input" type="radio" name="jenis_kelamin" value="laki-laki" /> Laki - Laki
+                                                        <br />
+                                                        <input class="form-check-input" type="radio" name="jenis_kelamin" value="perempuan" /> Perempuan
+                                                        <div class="invalid-feedback">Jenis Kelamin wajib diisi.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-2">
+                                                        <label for="email" class="form-label">Email :</label>
+                                                        <input type="email" id="email" name="email" class="form-control" placeholder="example@example.com" />
+                                                        <div class="invalid-feedback">Format email tidak valid.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-2">
+                                                        <label for="alamat" class="form-label">Alamat :</label>
+                                                        <input type="text" id="alamat" name="alamat" class="form-control" placeholder="Jakarta" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-2">
+                                                        <label for="no_ktp" class="form-label">No. KTP :</label>
+                                                        <input type="text" id="no_ktp" name="no_ktp" class="form-control" placeholder="3576014403910003" />
+                                                        <div class="invalid-feedback">No. KTP harus 16 digit angka.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-2">
+                                                        <label for="no_npwp" class="form-label">No. NPWP :</label>
+                                                        <input type="text" id="no_npwp" name="no_npwp" class="form-control" placeholder="12.345.678.9-001.002" />
+                                                        <div class="invalid-feedback">No. NPWP harus 15 digit angka.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-2">
+                                                        <label for="no_handphone" class="form-label">No. Handphone :</label>
+                                                        <input type="tel" id="no_handphone" name="no_handphone" class="form-control" placeholder="082126377711" />
+                                                        <div class="invalid-feedback">No. Handphone harus 8-15 digit angka.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-2">
+                                                        <label for="role" class="form-label">Role : <span class="text-danger">*</span></label>
+                                                        <select class="form-select" id="role" name="role">
+                                                            <option selected disabled value="">Choose...</option>
+                                                            <option value="1">Super Admin</option>
+                                                            <option value="2">Admin</option>
+                                                            <option value="3">User</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Role wajib dipilih.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Upload Profile Picture -->
+                                <div class="col-md-4">
+                                    <div class="card card-primary card-outline mb-4">
+                                        <div class="card-header">
+                                            <div class="card-title">Profile Picture</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-center">
+                                                <img src="/img/avatar.png" alt="" id="avatar" class="rounded" style="width: 250px; height: 250px" />
+                                            </div>
+                                            <div class="m-3">
+                                                <label for="avatarUpload" class="form-label">Upload Picture :</label>
+                                                <input type="file" id="avatarUpload" name="avatar" class="form-control" />
+                                                <small id="error-message" style="color: red; display: none">Ukuran gambar maksimal 1MB!</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tombol Submit -->
+                            <div class="col-md-12">
+                                <div class="card mb-4">
+                                    <div class="m-3 d-flex justify-content-between">
+                                        <div>
+                                            <a href="/user" class="btn btn-secondary"><i class="bi bi-arrow-left me-2"></i>Back</a>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-info" type="submit">Submit <i class="bi bi-arrow-right ms-2"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+
+            <!-- =============================== Footer ================================ -->
+            <div th:replace="fragments/footer  :: footer"></div>
+        </div>
+        <div th:replace="fragments/footer  :: script"></div>
+
+        <!-- ================================= CSS ================================= -->
+        <style>
+            @media (min-width: 577px) and (max-width: 992px) {
+                #avatar {
+                    width: 150px !important;
+                    height: 150px !important;
+                }
+            }
+            .error {
+                color: red;
+            }
+        </style>
+        <!-- =============================== SCRIPT ================================ -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+        <script>
+            $(document).ready(function () {
+                //validasi
+                var $userForm = $("#userForm");
+
+                $userForm.validate({
+                    rules: {
+                        username: {
+                            required: true,
+                            specialChars: true,
+                        },
+                        password: {
+                            required: true,
+                        },
+                        name: {
+                            required: true,
+                        },
+                        jenis_kelamin: {
+                            required: true,
+                        },
+                        email: {
+                            email: true,
+                        },
+                        no_ktp: {
+                            numericOnly: true,
+                            minlength: 16,
+                            maxlength: 16,
+                        },
+                        no_npwp: {
+                            numericMinDot: true,
+                            minlength: 20,
+                            maxlength: 20,
+                        },
+                        no_handphone: {
+                            numericOnly: true,
+                            minlength: 8,
+                            maxlength: 12,
+                        },
+                        role: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        username: {
+                            required: "Username wajib diisi",
+                            specialChars: "Username hanya boleh huruf kecil dan angka",
+                        },
+                        password: {
+                            required: "Password wajib diisi",
+                        },
+                        name: {
+                            required: "Nama lengkap wajib diisi",
+                        },
+                        jenis_kelamin: {
+                            required: "Jenis Kelamin wajib diisi",
+                        },
+                        email: {
+                            email: "Masukan email yang valid",
+                        },
+                        no_ktp: {
+                            numericOnly: "No KTP hanya boleh angka",
+                            minlength: "Minimal 16 digit",
+                            maxlength: "Maximal 16 digit",
+                        },
+                        no_npwp: {
+                            numericMinDot: "No NPWP hanya boleh angka, (.) dan (-)",
+                            minlength: "Minimal 20 digit include (.) dan (-)",
+                            maxlength: "Maximal 20 digit include (.) dan (-)",
+                        },
+                        no_handphone: {
+                            numericOnly: "No Handphone hanya boleh angka",
+                            minlength: "Minimal 8 digit",
+                            maxlength: "Maximal 12 digit",
+                        },
+                        role: {
+                            required: "Role wajib diisi",
+                        },
+                    },
+                    errorPlacement: function (error, element) {
+                        if (element.is(":radio")) {
+                            error.appendTo(element.parents(".jk"));
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                });
+
+                //Huruf Kecil dan Angka Saja
+                jQuery.validator.addMethod("specialChars", function (value, element) {
+                    return this.optional(element) || /^[a-z 0-9]+$/.test(value);
+                });
+
+                //Number Only
+                jQuery.validator.addMethod("numericOnly", function (value, element) {
+                    return this.optional(element) || /^[0-9]+$/.test(value);
+                });
+
+                //Number and Special Charcter
+                jQuery.validator.addMethod("numericMinDot", function (value, element) {
+                    return this.optional(element) || /^[0-9 . -]+$/.test(value);
+                });
+            });
+            $("#avatarUpload").on("change", function () {
+                var file = this.files[0];
+                var errorMessage = $("#error-message");
+
+                if (file) {
+                    var fileSize = file.size; // Ukuran dalam byte
+                    var fileType = file.type; // Tipe file
+
+                    var allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+                    var maxSize = 1048576; // 1MB
+
+                    // Validasi ukuran file
+                    if (fileSize > maxSize) {
+                        errorMessage.text("Ukuran gambar maksimal 1MB!").show();
+                        $(this).val(""); // Reset input file
+                        return;
+                    }
+
+                    // Validasi ekstensi file
+                    if ($.inArray(fileType, allowedTypes) === -1) {
+                        errorMessage.text("Format file harus jpg, jpeg, atau png!").show();
+                        $(this).val(""); // Reset input file
+                        return;
+                    }
+
+                    errorMessage.hide();
+                    previewImage(file);
+                }
+            });
+
+            function previewImage(file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#avatar").attr("src", e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head :: head"> </head>
+
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+        <div class="app-wrapper">
+            <!-- =============================== Navbar ================================ -->
+            <div th:replace="fragments/header :: header"></div>
+
+            <!-- ============================ START SIDEBAR ============================ -->
+            <div th:replace="fragments/sidebar  :: sidebar"></div>
+
+            <!-- =============================== CONTENT =============================== -->
+            <main class="app-main">
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6"><h3 class="mb-0">Users Page</h3></div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-end"></ol>
+                            </div>
+                        </div>
+                        <div th:if="${param.success}" class="alert alert-success" role="alert">
+                            Anda telah berhasil Menambah Data User.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3 class="card-title">Users Table</h3>
+                                <a href="/user/tambah" class="btn btn-sm btn-info float-end">
+                                    <i class="bi bi-plus-lg"></i>
+                                    Tambah User
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="userTable" class="table table-bordered display">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 10px">No.</th>
+                                                <th style="width: 200px">Username</th>
+                                                <th>Name</th>
+                                                <th style="width: 150px">Role</th>
+                                                <th style="width: 150px">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="align-middle" th:each="user, iterStat : ${users}">
+                                                <td><span th:text="${iterStat.index + 1}"></span></td>
+                                                <td th:text="${user.username}"></td>
+                                                <td th:text="${user.name}"></td>
+                                                <td>
+                                                    <span class="badge opacity-5" th:classappend="${user.roleName == 'Super Admin' ? 'text-bg-primary' : (user.roleName == 'Admin' ? 'text-bg-warning' : user.roleName == 'User' ? 'text-bg-info' : 'text-bg-secondary')}" th:text="${user.roleName}"> </span>
+                                                </td>
+                                                <td class="d-flex justify-content-start">
+                                                    <a th:href="@{/users/detail/{id}(id=${user.id})}" class="btn btn-sm btn-primary me-1">
+                                                        <i class="bi bi-file-earmark-text"></i>
+                                                    </a>
+                                                    <a th:href="@{/users/edit/{id}(id=${user.id})}" class="btn btn-sm btn-warning me-1">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </a>
+                                                    <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-sm btn-danger me-1">
+                                                        <i class="bi bi-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- =============================== Footer ================================ -->
+            <div th:replace="fragments/footer  :: footer"></div>
+        </div>
+        <th:block th:replace="fragments/footer :: script"></th:block>
+        <script>
+            $(document).ready(function () {
+                $("#userTable").DataTable({
+                    autoWidth: false,
+                    ordering: false,
+                });
+            });
+        </script>
+    </body>
+</html>

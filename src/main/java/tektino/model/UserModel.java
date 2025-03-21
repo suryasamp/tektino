@@ -1,5 +1,6 @@
 package tektino.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,7 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
+@Data
 @Table(name = "users")
 public class UserModel {
 
@@ -19,44 +23,22 @@ public class UserModel {
     private String username;
     private String password;
     private String name;
+    private String email;
+    private String alamat;
+    private String no_ktp;
+    private String no_npwp;
+    private String no_handphone;
+    private String jenis_kelamin;
+
+    @Column(name = "avatar_path")
+    private String avatarPath;
 
     @ManyToOne
     @JoinColumn(name = "role")
-    private tektino.model.RoleModel role;
+    private RoleModel role;
 
- 
-
-    // Constructors, getters, setters
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public tektino.model.RoleModel getRole() {
-        return this.role;
-    }
-
-    public void setRole(tektino.model.RoleModel role) {
-        this.role = role;
+    public String getRoleName() {
+        return role != null ? role.getRoleName() : "";
     }
 
 }

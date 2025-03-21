@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"></html>
+<html xmlns:th="http://www.thymeleaf.org">
     <body>
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark" th:fragment="sidebar">
             <div class="sidebar-brand">
@@ -11,10 +11,63 @@
                 <nav class="mt-2">
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="/dashboard" class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/dashboard'} ? 'active'">
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Dashboard</p>
                             </a>
+                        </li>
+                        <li
+                            class="nav-item"
+                            th:classappend="
+                                ${
+                                    #httpServletRequest.requestURI == '/user' or 
+                                    #httpServletRequest.requestURI == '/user/tambah' or 
+                                    #httpServletRequest.requestURI == '/product'
+                                } ? 'menu-open'"
+                        >
+                            <a
+                                href="#"
+                                class="nav-link"
+                                th:classappend="
+                                ${
+                                    #httpServletRequest.requestURI == '/user' or 
+                                    #httpServletRequest.requestURI == '/user/tambah' or 
+                                    #httpServletRequest.requestURI == '/product'
+                                } ? 'active'"
+                            >
+                                <i class="nav-icon bi bi-archive"></i>
+                                <p>Master</p>
+                                <i class="nav-arrow bi bi-chevron-right"></i>
+                            </a>
+                            <ul class="nav nav-treeview ms-4">
+                                <li class="nav-item">
+                                    <a
+                                        href="/user"
+                                        class="nav-link"
+                                        th:classappend="
+                                    ${
+                                        #httpServletRequest.requestURI == '/user' or 
+                                        #httpServletRequest.requestURI == '/user/tambah'
+                                    } ? 'active'"
+                                    >
+                                        <i class="nav-icon bi bi-people"></i>
+                                        <p>Users</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a
+                                        href="/product"
+                                        class="nav-link"
+                                        th:classappend="
+                                    ${
+                                        #httpServletRequest.requestURI == '/product'
+                                    } ? 'active'"
+                                    >
+                                        <i class="nav-icon bi bi-box"></i>
+                                        <p>Product</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </nav>
