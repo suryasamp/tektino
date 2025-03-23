@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import tektino.model.UserModel;
 import tektino.repository.UserRepository;
+import tektino.service.UserService;
 
 @Controller
 @RequestMapping("/user")
@@ -32,6 +33,9 @@ public class UsersController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public String userPage(Model model) {
@@ -46,25 +50,12 @@ public class UsersController {
     }
 
     @PostMapping("/simpan")
-    public String simpanUser(@ModelAttribute UserModel user, @RequestParam("avatar") MultipartFile avatar,
-            RedirectAttributes redirectAttributes) {
+    public String simpanUser(@ModelAttribute UserModel user, @RequestParam("avatar") MultipartFile avatar,RedirectAttributes redirectAttributes) {
+
+        System.out.println("AVATAR: "+avatar);
+        System.out.println("USER: "+user);
         try {
-            // Simpan file jika ada upload
-            if (!avatar.isEmpty()) {
-                String originalFileName = avatar.getOriginalFilename();
-                String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-
-                // Buat nama file unik: username + timestamp + ekstensi
-                String fileName = user.getUsername() + "_" + System.currentTimeMillis() + fileExtension;
-                String uploadDir = new File("src/main/resources/static/uploads/").getAbsolutePath();
-                Path filePath = Paths.get(uploadDir + fileName);
-
-                Files.createDirectories(filePath.getParent());
-                Files.copy(avatar.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-                // Set path gambar ke user
-                user.setAvatarPath("/" + uploadDir + fileName);
-            }
+            userService.uploadAvatar(avatar, user);
 
             // Enkripsi Password
             String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -72,13 +63,12 @@ public class UsersController {
 
             // Simpan user ke database
             userRepository.save(user);
-            redirectAttributes.addFlashAttribute("success", "User berhasil disimpan!");
-
-        } catch (IOException e) {
-            redirectAttributes.addFlashAttribute("error", "Gagal mengupload avatar!");
-            e.printStackTrace();
+            
+        } catch (Exception e) {
+            System.out.println("ERROR: "+e);
         }
-
+        
+        redirectAttributes.addFlashAttribute("success", "User berhasil disimpan!");
         return "redirect:/user";
     }
 

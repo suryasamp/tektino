@@ -12,7 +12,7 @@
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
                             <a href="/dashboard" class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/dashboard'} ? 'active'">
-                                <i class="nav-icon bi bi-speedometer"></i>
+                                <i class="fa-light fa-landmark-dome mt-1"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
@@ -22,7 +22,7 @@
                                 ${
                                     #httpServletRequest.requestURI == '/user' or 
                                     #httpServletRequest.requestURI == '/user/tambah' or 
-                                    #httpServletRequest.requestURI == '/product'
+                                    #httpServletRequest.requestURI == '/role'
                                 } ? 'menu-open'"
                         >
                             <a
@@ -32,10 +32,10 @@
                                 ${
                                     #httpServletRequest.requestURI == '/user' or 
                                     #httpServletRequest.requestURI == '/user/tambah' or 
-                                    #httpServletRequest.requestURI == '/product'
+                                    #httpServletRequest.requestURI == '/role'
                                 } ? 'active'"
                             >
-                                <i class="nav-icon bi bi-archive"></i>
+                                <i class="fa-light fa-cabinet-filing mt-1"></i>
                                 <p>Master</p>
                                 <i class="nav-arrow bi bi-chevron-right"></i>
                             </a>
@@ -50,21 +50,87 @@
                                         #httpServletRequest.requestURI == '/user/tambah'
                                     } ? 'active'"
                                     >
-                                        <i class="nav-icon bi bi-people"></i>
-                                        <p>Users</p>
+                                        <i class="fa-light fa-users mt-1"></i>
+                                        <p>Karyawan</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a
-                                        href="/product"
+                                        href="/role"
                                         class="nav-link"
                                         th:classappend="
                                     ${
-                                        #httpServletRequest.requestURI == '/product'
+                                        #httpServletRequest.requestURI == '/role'
                                     } ? 'active'"
                                     >
-                                        <i class="nav-icon bi bi-box"></i>
-                                        <p>Product</p>
+                                        <i class="fa-light fa-users-gear mt-1"></i>
+                                        <p>Role</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li
+                            class="nav-item"
+                            th:classappend="
+                                ${
+                                    #httpServletRequest.requestURI == '/selang' or 
+                                    #httpServletRequest.requestURI == '/selang/tambah' or 
+                                    #httpServletRequest.requestURI == '/kompresor'
+                                } ? 'menu-open'"
+                        >
+                            <a
+                                href="#"
+                                class="nav-link"
+                                th:classappend="
+                                ${
+                                    #httpServletRequest.requestURI == '/selang' or 
+                                    #httpServletRequest.requestURI == '/selang/tambah' or 
+                                    #httpServletRequest.requestURI == '/kompresor'
+                                } ? 'active'"
+                            >
+                                <i class="fa-light fa-box-open mt-1"></i>
+                                <p>Product</p>
+                                <i class="nav-arrow bi bi-chevron-right"></i>
+                            </a>
+                            <ul class="nav nav-treeview ms-4">
+                                <li class="nav-item">
+                                    <a
+                                        href="/selang"
+                                        class="nav-link"
+                                        th:classappend="
+                                    ${
+                                        #httpServletRequest.requestURI == '/selang' or 
+                                        #httpServletRequest.requestURI == '/selang/tambah'
+                                    } ? 'active'"
+                                    >
+                                        <i class="fa-light fa-hose mt-1"></i>
+                                        <p>Selang</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a
+                                        href="/kompresor"
+                                        class="nav-link"
+                                        th:classappend="
+                                    ${
+                                        #httpServletRequest.requestURI == '/kompresor'
+                                    } ? 'active'"
+                                    >
+                                        <i class="fa-light fa-engine mt-1"></i>
+                                        <p>kompresor</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a
+                                        href="/kompresor"
+                                        class="nav-link"
+                                        th:classappend="
+                                    ${
+                                        #httpServletRequest.requestURI == '/kompresor'
+                                    } ? 'active'"
+                                    >
+                                        <i class="fa-light fa-air-conditioner mt-1"></i>
+                                        <p>Double Blower</p>
                                     </a>
                                 </li>
                             </ul>

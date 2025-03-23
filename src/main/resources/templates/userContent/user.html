@@ -15,7 +15,7 @@
                 <div class="app-content-header">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-sm-6"><h3 class="mb-0">Users Page</h3></div>
+                            <div class="col-sm-6"><h3 class="mb-0">Halaman Karyawan</h3></div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-end"></ol>
                             </div>
@@ -30,10 +30,10 @@
                     <div class="container-fluid">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h3 class="card-title">Users Table</h3>
-                                <a href="/user/tambah" class="btn btn-sm btn-info float-end">
-                                    <i class="bi bi-plus-lg"></i>
-                                    Tambah User
+                                <h3 class="card-title">Table Karyawan</h3>
+                                <a href="/user/tambah" class="btn btn-sm btn-primary float-end">
+                                    Tambah Karyawan
+                                    <i class="fa-light fa-user-plus ms-2 mt-1"></i>
                                 </a>
                             </div>
                             <div class="card-body">
@@ -56,15 +56,15 @@
                                                 <td>
                                                     <span class="badge opacity-5" th:classappend="${user.roleName == 'Super Admin' ? 'text-bg-primary' : (user.roleName == 'Admin' ? 'text-bg-warning' : user.roleName == 'User' ? 'text-bg-info' : 'text-bg-secondary')}" th:text="${user.roleName}"> </span>
                                                 </td>
-                                                <td class="d-flex justify-content-start">
-                                                    <a th:href="@{/users/detail/{id}(id=${user.id})}" class="btn btn-sm btn-primary me-1">
-                                                        <i class="bi bi-file-earmark-text"></i>
+                                                <td class="d-flex justify-content-end">
+                                                    <a th:href="@{/users/detail/{id}(id=${user.id})}" class="btn btn-sm btn-info me-1" data-bs-toggle="tooltip" data-bs-title="Detail User" data-bs-placement="top">
+                                                        <i class="fa-light fa-file-circle-info"></i>
                                                     </a>
-                                                    <a th:href="@{/users/edit/{id}(id=${user.id})}" class="btn btn-sm btn-warning me-1">
-                                                        <i class="bi bi-pencil-square"></i>
+                                                    <a th:href="@{/users/edit/{id}(id=${user.id})}" class="btn btn-sm btn-warning me-1" data-bs-toggle="tooltip" data-bs-title="Edit User" data-bs-placement="top">
+                                                        <i class="fa-light fa-file-pen"></i>
                                                     </a>
-                                                    <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-sm btn-danger me-1">
-                                                        <i class="bi bi-trash"></i>
+                                                    <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-sm btn-danger me-1" data-bs-toggle="tooltip" data-bs-title="Delete User" data-bs-placement="top">
+                                                        <i class="fa-light fa-trash-can"></i>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -86,6 +86,11 @@
                 $("#userTable").DataTable({
                     autoWidth: false,
                     ordering: false,
+                });
+
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
                 });
             });
         </script>
