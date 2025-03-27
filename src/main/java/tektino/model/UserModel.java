@@ -24,6 +24,8 @@ import lombok.Setter;
 @Table(name = "users")
 public class UserModel {
 
+    public static final String getRole = null;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

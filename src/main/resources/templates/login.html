@@ -22,7 +22,13 @@
                 </div>
                 <div class="card-body login-card-body rounded">
                     <p class="login-box-msg">Sign in to start your session</p>
-                    <div th:if="${param.logout}" class="alert alert-success" role="alert">Anda telah berhasil logout.</div>
+                    <div th:if="${error}" class="alert alert-danger">
+                        <p th:text="${error}"></p>
+                    </div>
+
+                    <div th:if="${message}" class="alert alert-success">
+                        <p th:text="${message}"></p>
+                    </div>
 
                     <form th:action="@{/login}" method="post">
                         <div class="input-group mb-1">

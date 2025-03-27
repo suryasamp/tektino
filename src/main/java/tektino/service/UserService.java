@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,8 +30,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("username: " + username);
@@ -38,8 +37,6 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
-
-        System.out.println("USER:" + user);
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole().getRoleName()));
@@ -50,30 +47,19 @@ public class UserService implements UserDetailsService {
 
     public void uploadAvatar(MultipartFile avatar, UserModel user) {
         if (avatar == null || avatar.isEmpty()) {
-            String defaultAvatar = "man-avatar.png";
-            if ("perempuan".equalsIgnoreCase(user.getJenis_kelamin())) {
-                defaultAvatar = "woman-avatar.png";
-            }
-            String defaultAvatarPath = "src/main/resources/static/img/" + defaultAvatar;
-            String uploadDir = new File("src/main/resources/static/uploads/").getAbsolutePath();
-            String fileName = defaultAvatar;
-            Path filePath = Paths.get(uploadDir + "/" + fileName);
-        
-            try {
-                Files.copy(Paths.get(defaultAvatarPath), filePath, StandardCopyOption.REPLACE_EXISTING);
-                user.setAvatarPath("/uploads/" + fileName);
-            } catch (IOException e) {
-                e.printStackTrace();
-                // Handle error jika gagal menyalin gambar default
+            if (user.getJenis_kelamin().equals("laki-laki")) {
+                user.setAvatarPath("/img/man-avatar.png");
+            } else {
+                user.setAvatarPath("/img/woman-avatar.png");
             }
         } else {
             String originalFileName = avatar.getOriginalFilename();
             String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-        
+
             String fileName = user.getUsername() + "_" + System.currentTimeMillis() + fileExtension;
             String uploadDir = new File("src/main/resources/static/uploads/").getAbsolutePath();
             Path filePath = Paths.get(uploadDir + "/" + fileName);
-        
+
             try {
                 Files.createDirectories(filePath.getParent());
                 Files.copy(avatar.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
@@ -84,6 +70,11 @@ public class UserService implements UserDetailsService {
             }
         }
 
+    }
+
+    public User findByUsername(String name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByUsername'");
     }
 
 }

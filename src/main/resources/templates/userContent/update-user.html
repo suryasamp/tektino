@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/head :: head"> </head>
+
     <body class="layout-fixed sidebar-expand-lg bg-body-tertiary" th:data-error="${error}">
         <div class="app-wrapper">
+            <!-- =============================== Navbar ================================ -->
             <div th:replace="fragments/header :: header"></div>
+
+            <!-- ============================ START SIDEBAR ============================ -->
             <div th:replace="fragments/sidebar  :: sidebar"></div>
+
+            <!-- =============================== CONTENT =============================== -->
             <main class="app-main">
                 <div class="app-content-header">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-sm-6"><h3 class="mb-0">Users Form</h3></div>
+                            <div class="col-sm-6"><h3 class="mb-0">User Update Form</h3></div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-end">
                                     <li class="breadcrumb-item"><a href="/user">User</a></li>
@@ -22,8 +28,9 @@
                 </div>
                 <div class="app-content">
                     <div class="container-fluid">
-                        <form id="userForm" th:action="@{/user/simpan}" th:object="${user}" method="post" enctype="multipart/form-data">
+                        <form id="userForm" class="needs-validation" novalidate th:action="@{/user/update/{id}(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data">
                             <div class="row">
+                                <!-- Form User -->
                                 <div class="col-md-8">
                                     <div class="card card-primary card-outline mb-4">
                                         <div class="card-header">
@@ -34,75 +41,78 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
                                                         <label for="username" class="form-label">Username : <span class="text-danger">*</span></label>
-                                                        <input type="text" id="username" name="username" class="form-control" placeholder="Username" />
+                                                        <input type="text" id="username" name="username" th:value="${user.username}" class="form-control" placeholder="Username" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
-                                                        <label for="password" class="form-label">Password : <span class="text-danger">*</span></label>
+                                                        <label for="password" class="form-label">Password : <span class="text-danger"></span></label>
                                                         <input type="password" id="password" name="password" class="form-control" placeholder="Password" />
-                                                        <div class="invalid-feedback">Password wajib diisi dan minimal 6 character.</div>
+                                                        <i style="font-size: 11px; color: black">*kosongkan password jika tidak ada perubahan</i>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
                                                         <label for="name" class="form-label">Nama Lengkap : <span class="text-danger">*</span></label>
-                                                        <input type="text" id="name" name="name" class="form-control" placeholder="Nama Lengkap" />
-                                                        <div class="invalid-feedback">Nama lengkap wajib diisi.</div>
+                                                        <input type="text" id="name" name="name" th:value="${user.name}" class="form-control" placeholder="Nama Lengkap" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-2 jk">
-                                                        <label for="jenis_kelamin" class="form-label">Jenis Kelamin : <span class="text-danger">*</span></label>
-                                                        <br />
-                                                        <input class="form-check-input" type="radio" name="jenis_kelamin" value="laki-laki" /> Laki - Laki
-                                                        <br />
-                                                        <input class="form-check-input" type="radio" name="jenis_kelamin" value="perempuan" /> Perempuan
+                                                        <label class="form-label">Jenis Kelamin: <span class="text-danger">*</span></label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="jenis_kelamin" id="laki-laki" value="laki-laki" th:checked="${user.jenis_kelamin == 'laki-laki'}" />
+                                                            <label class="form-check-label" for="laki-laki">Laki-laki</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuan" value="perempuan" th:checked="${user.jenis_kelamin == 'perempuan'}" />
+                                                            <label class="form-check-label" for="perempuan">Perempuan</label>
+                                                        </div>
                                                         <div class="invalid-feedback">Jenis Kelamin wajib diisi.</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
                                                         <label for="email" class="form-label">Email :</label>
-                                                        <input type="email" id="email" name="email" class="form-control" placeholder="example@example.com" />
+                                                        <input type="email" id="email" name="email" th:value="${user.email}" class="form-control" placeholder="example@example.com" />
                                                         <div class="invalid-feedback">Format email tidak valid.</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
                                                         <label for="alamat" class="form-label">Alamat :</label>
-                                                        <input type="text" id="alamat" name="alamat" class="form-control" placeholder="Jakarta" />
+                                                        <input type="text" id="alamat" name="alamat" th:value="${user.alamat}" class="form-control" placeholder="Jakarta" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
                                                         <label for="no_ktp" class="form-label">No. KTP :</label>
-                                                        <input type="text" id="no_ktp" name="no_ktp" class="form-control" placeholder="3576014403910003" />
+                                                        <input type="text" id="no_ktp" name="no_ktp" th:value="${user.no_ktp}" class="form-control" placeholder="3576014403910003" />
                                                         <div class="invalid-feedback">No. KTP harus 16 digit angka.</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
                                                         <label for="no_npwp" class="form-label">No. NPWP :</label>
-                                                        <input type="text" id="no_npwp" name="no_npwp" class="form-control" placeholder="12.345.678.9-001.002" />
-                                                        <div class="invalid-feedback">Format NPWP tidak valid.</div>
+                                                        <input type="text" id="no_npwp" name="no_npwp" th:value="${user.no_npwp}" class="form-control" placeholder="12.345.678.9-001.002" />
+                                                        <div class="invalid-feedback">No. NPWP harus 15 digit angka.</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
                                                         <label for="no_handphone" class="form-label">No. Handphone :</label>
-                                                        <input type="tel" id="no_handphone" name="no_handphone" class="form-control" placeholder="082126377711" />
+                                                        <input type="tel" id="no_handphone" name="no_handphone" th:value="${user.no_handphone}" class="form-control" placeholder="082126377711" />
                                                         <div class="invalid-feedback">No. Handphone harus 8-15 digit angka.</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
-                                                        <label for="role" class="form-label">Role : <span class="text-danger">*</span></label>
+                                                        <label for="role" class="form-label">Role: <span class="text-danger">*</span></label>
                                                         <select class="form-select" id="role" name="role">
-                                                            <option selected disabled value="">Choose...</option>
-                                                            <option value="1">Super Admin</option>
-                                                            <option value="2">Admin</option>
-                                                            <option value="3">User</option>
+                                                            <option value="">Choose...</option>
+                                                            <option value="1" th:selected="${user.role.id == 1}">Super Admin</option>
+                                                            <option value="2" th:selected="${user.role.id == 2}">Admin</option>
+                                                            <option value="3" th:selected="${user.role.id == 3}">User</option>
                                                         </select>
                                                         <div class="invalid-feedback">Role wajib dipilih.</div>
                                                     </div>
@@ -111,6 +121,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Upload Profile Picture -->
                                 <div class="col-md-4">
                                     <div class="card card-primary card-outline mb-4">
                                         <div class="card-header">
@@ -118,17 +130,19 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="d-flex justify-content-center">
-                                                <img src="/img/avatar.png" alt="" id="avatar" class="rounded" style="width: 250px; height: 250px" />
+                                                <img th:src="${user.AvatarPath}" alt="" id="avatar" class="rounded" style="width: 250px; height: 250px" />
                                             </div>
                                             <div class="m-3">
                                                 <label for="avatarUpload" class="form-label">Upload Picture :</label>
                                                 <input type="file" id="avatarUpload" name="avatar" class="form-control" />
-                                                <div class="invalid-feedback" id="avatarUpload-error"></div>
+                                                <small id="error-message" style="color: red; display: none">Ukuran gambar maksimal 1MB!</small>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Tombol Submit -->
                             <div class="col-md-12">
                                 <div class="card mb-4">
                                     <div class="m-3 d-flex justify-content-between">
@@ -136,7 +150,7 @@
                                             <a href="/user" class="btn btn-secondary"><i class="bi bi-arrow-left me-2"></i>Back</a>
                                         </div>
                                         <div>
-                                            <button class="btn btn-info" id="submitBtn" type="submit">Submit <i class="bi bi-arrow-right ms-2"></i></button>
+                                            <button class="btn btn-info" type="submit">Submit <i class="bi bi-arrow-right ms-2"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -145,9 +159,13 @@
                     </div>
                 </div>
             </main>
+
+            <!-- =============================== Footer ================================ -->
             <div th:replace="fragments/footer  :: footer"></div>
         </div>
         <div th:replace="fragments/footer  :: script"></div>
+
+        <!-- ================================= CSS ================================= -->
         <style>
             @media (min-width: 577px) and (max-width: 992px) {
                 #avatar {
@@ -159,6 +177,7 @@
                 color: red;
             }
         </style>
+        <!-- =============================== SCRIPT ================================ -->
         <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
         <script>
             $(function () {
@@ -168,7 +187,7 @@
                         specialChars: true,
                     },
                     password: {
-                        required: true,
+                        required: false,
                     },
                     name: {
                         required: true,
@@ -330,7 +349,7 @@
                 var errorMessage = $("body").data("error"); // Ambil data sukses
                 if (errorMessage) {
                     iziToast.error({
-                        title: "Failed",
+                        title: "Error",
                         position: "topCenter",
                         message: errorMessage,
                         transitionIn: "bounceInDown",
@@ -338,7 +357,7 @@
                     });
                     $("body").removeAttr("data-error");
                 }
-            }); //END FUNGCTION
+            });
         </script>
     </body>
 </html>

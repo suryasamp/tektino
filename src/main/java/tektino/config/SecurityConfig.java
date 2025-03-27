@@ -36,9 +36,12 @@ public class SecurityConfig {
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/dashboard")
+                .failureUrl("/login?error=true") // Menambahkan parameter jika login gagal
                 .permitAll()
                 .and()
                 .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout=true") // Menyertakan parameter logout=true
                 .permitAll();
         return http.build();
     }

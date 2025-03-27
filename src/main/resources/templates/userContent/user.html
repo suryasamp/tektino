@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/head :: head"> </head>
 
-    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <body class="layout-fixed sidebar-expand-lg bg-body-tertiary" th:data-success="${success}">
         <div class="app-wrapper">
             <!-- =============================== Navbar ================================ -->
             <div th:replace="fragments/header :: header"></div>
@@ -20,10 +20,10 @@
                                 <ol class="breadcrumb float-sm-end"></ol>
                             </div>
                         </div>
-                        <div th:if="${param.success}" class="alert alert-success" role="alert">
-                            Anda telah berhasil Menambah Data User.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
+                        <!-- <div th:if="${success}" class="alert alert-success" role="alert">
+                            <span th:text="${success}"></span>
+                            <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div> -->
                     </div>
                 </div>
                 <div class="app-content">
@@ -54,16 +54,46 @@
                                                 <td th:text="${user.username}"></td>
                                                 <td th:text="${user.name}"></td>
                                                 <td>
-                                                    <span class="badge opacity-5" th:classappend="${user.roleName == 'Super Admin' ? 'text-bg-primary' : (user.roleName == 'Admin' ? 'text-bg-warning' : user.roleName == 'User' ? 'text-bg-info' : 'text-bg-secondary')}" th:text="${user.roleName}"> </span>
+                                                    <span
+                                                        class="badge opacity-5"
+                                                        th:classappend="${user.roleName == 'ROLE_SUPER_ADMIN' ? 'text-bg-primary' : 
+                                                                        (user.roleName == 'ROLE_ADMIN' ? 'text-bg-warning' : 
+                                                                        (user.roleName == 'ROLE_USER' ? 'text-bg-info' : 'text-bg-secondary'))}"
+                                                        th:text="${user.roleName == 'ROLE_SUPER_ADMIN' ? 'Super Admin' : 
+                                                                (user.roleName == 'ROLE_ADMIN' ? 'Admin' : 
+                                                                (user.roleName == 'ROLE_USER' ? 'User' : 'Unknown'))}"
+                                                    >
+                                                    </span>
                                                 </td>
                                                 <td class="d-flex justify-content-end">
-                                                    <a th:href="@{/users/detail/{id}(id=${user.id})}" class="btn btn-sm btn-info me-1" data-bs-toggle="tooltip" data-bs-title="Detail User" data-bs-placement="top">
+                                                    <a th:href="@{/user/detail/{id}(id=${user.id})}" class="btn btn-sm btn-info me-1" data-bs-toggle="tooltip" data-bs-title="Detail User" data-bs-placement="top">
                                                         <i class="fa-light fa-file-circle-info"></i>
                                                     </a>
-                                                    <a th:href="@{/users/edit/{id}(id=${user.id})}" class="btn btn-sm btn-warning me-1" data-bs-toggle="tooltip" data-bs-title="Edit User" data-bs-placement="top">
+                                                    <!-- <a th:href="@{/user/edit/{id}(id=${user.id})}" class="btn btn-sm btn-warning me-1" data-bs-toggle="tooltip" data-bs-title="Edit User" data-bs-placement="top">
+                                                        <i class="fa-light fa-file-pen"></i>
+                                                    </a> -->
+                                                    <a
+                                                        href="@{/user/edit/{id}(id=${user.id})}"
+                                                        th:if="${user.username != 'superadmin' and 
+                                                                user.role != 'Super Admin'}"
+                                                        class="btn btn-sm btn-warning me-1"
+                                                        data-bs-toggle="tooltip"
+                                                        data-bs-title="Edit User"
+                                                        data-bs-placement="top"
+                                                    >
                                                         <i class="fa-light fa-file-pen"></i>
                                                     </a>
-                                                    <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-sm btn-danger me-1" data-bs-toggle="tooltip" data-bs-title="Delete User" data-bs-placement="top">
+                                                    <a
+                                                        href="javascript:void(0);"
+                                                        th:if="${user.username != 'superadmin' and 
+                                                                user.role != 'Super Admin' and 
+                                                                user.username != userLogin}"
+                                                        th:attr="onclick='confirmDelete(' + ${user.id} + ')'"
+                                                        class="btn btn-sm btn-danger me-1"
+                                                        data-bs-toggle="tooltip"
+                                                        data-bs-title="Delete User"
+                                                        data-bs-placement="top"
+                                                    >
                                                         <i class="fa-light fa-trash-can"></i>
                                                     </a>
                                                 </td>
@@ -93,6 +123,51 @@
                     return new bootstrap.Tooltip(tooltipTriggerEl);
                 });
             });
+            var successMessage = $("body").data("success"); // Ambil data sukses
+
+            if (successMessage) {
+                iziToast.success({
+                    title: "OK",
+                    message: successMessage,
+                    position: "topCenter",
+                    transitionIn: "bounceInDown",
+                    transitionOut: "fadeOutUp",
+                });
+                $("body").removeAttr("data-success");
+            }
+
+            function confirmDelete(userId) {
+                iziToast.question({
+                    timeout: false,
+                    close: false,
+                    color: "#e74c4c",
+                    icon: "fa-solid fa-hexagon-exclamation",
+                    overlay: true,
+                    displayMode: "once",
+                    id: "question",
+                    zindex: 999,
+                    title: "Warning !",
+                    message: "Apakah Anda yakin ingin <b>menghapus</b> user ini?",
+                    position: "center",
+                    buttons: [
+                        [
+                            "<button><b>YES</b></button>",
+                            function (instance, toast) {
+                                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+                                console.log("userId:", userId);
+                                window.location.href = "user/delete/" + userId; // Redirect ke URL delete
+                            },
+                            true,
+                        ],
+                        [
+                            "<button>NO</button>",
+                            function (instance, toast) {
+                                instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+                            },
+                        ],
+                    ],
+                });
+            }
         </script>
     </body>
 </html>

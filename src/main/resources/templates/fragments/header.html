@@ -14,14 +14,17 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown user-menu">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img src="/img/man-avatar.png" class="user-image rounded-circle shadow" alt="User Image" />
+                            <img th:src="${avatarPath} ?: '/img/avatar.png'" class="user-image rounded-circle shadow" alt="User Image" />
+
                             <!-- <span class="d-none d-md-inline"></span> -->
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end w-auto">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <a class="dropdown-item" href="#">Profile <i class="fa-light fa-user float-end mt-1"></i></a>
+                            </li>
                             <li><hr class="dropdown-divider" /></li>
                             <li>
-                                <a class="dropdown-item" href="/logout">Logout <i class="bi bi-box-arrow-right float-end"></i></a>
+                                <a class="dropdown-item" href="/logout">Logout <i class="fa-light fa-right-from-bracket float-end mt-1"></i></a>
                             </li>
                         </ul>
                     </li>
