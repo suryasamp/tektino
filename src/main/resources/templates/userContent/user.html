@@ -66,35 +66,14 @@
                                                     </span>
                                                 </td>
                                                 <td class="d-flex justify-content-end">
-                                                    <a th:href="@{/user/detail/{id}(id=${user.id})}" class="btn btn-sm btn-info me-1" data-bs-toggle="tooltip" data-bs-title="Detail User" data-bs-placement="top">
-                                                        <i class="fa-light fa-file-circle-info"></i>
+                                                    <a th:href="@{/user/detail/{id}(id=${user.id})}" class="me-1" data-bs-toggle="tooltip" data-bs-title="Detail User" data-bs-placement="top">
+                                                        <i class="fa-regular fa-file-circle-info text-primary fs-5"></i>
                                                     </a>
-                                                    <!-- <a th:href="@{/user/edit/{id}(id=${user.id})}" class="btn btn-sm btn-warning me-1" data-bs-toggle="tooltip" data-bs-title="Edit User" data-bs-placement="top">
-                                                        <i class="fa-light fa-file-pen"></i>
-                                                    </a> -->
-                                                    <a
-                                                        href="@{/user/edit/{id}(id=${user.id})}"
-                                                        th:if="${user.username != 'superadmin' and 
-                                                                user.role != 'Super Admin'}"
-                                                        class="btn btn-sm btn-warning me-1"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-title="Edit User"
-                                                        data-bs-placement="top"
-                                                    >
-                                                        <i class="fa-light fa-file-pen"></i>
+                                                    <a href="@{/user/edit/{id}(id=${user.id})}" th:if="${user.username != 'superadmin' and user.role != 'Super Admin'}" class="me-1" data-bs-toggle="tooltip" data-bs-title="Edit User" data-bs-placement="top">
+                                                        <i class="fa-regular fa-file-pen text-primary fs-5"></i>
                                                     </a>
-                                                    <a
-                                                        href="javascript:void(0);"
-                                                        th:if="${user.username != 'superadmin' and 
-                                                                user.role != 'Super Admin' and 
-                                                                user.username != userLogin}"
-                                                        th:attr="onclick='confirmDelete(' + ${user.id} + ')'"
-                                                        class="btn btn-sm btn-danger me-1"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-title="Delete User"
-                                                        data-bs-placement="top"
-                                                    >
-                                                        <i class="fa-light fa-trash-can"></i>
+                                                    <a href="javascript:void(0);" th:if="${user.username != 'superadmin' and user.role != 'Super Admin' and user.username != userLogin}" th:attr="onclick='confirmDelete(' + ${user.id} + ')'" class="me-1" data-bs-toggle="tooltip" data-bs-title="Delete User" data-bs-placement="top">
+                                                        <i class="fa-regular fa-file-circle-xmark text-danger fs-5"></i>
                                                     </a>
                                                 </td>
                                             </tr>
